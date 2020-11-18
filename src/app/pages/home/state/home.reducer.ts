@@ -3,19 +3,34 @@ import { createReducer, Action, on } from '@ngrx/store'
 import * as fromHomeAction from './home.actions';
 
 export interface HomeState {
-    text: string;
+    entity: any,
+    loading: boolean,
+    error: boolean,
 }
 
 export const homeInitialState: HomeState = {
-    text: "Pimenta",
+    entity: undefined,
+    loading: false,
+    error: false
 }
 
 const reducer = createReducer(
     homeInitialState,
-    on(fromHomeAction.changeText, (state, {text}) => ({
+    on(fromHomeAction.loadCurrentWeather, state => ({
         ...state,
-        text,
+        loading: true,
+        error: false,
     })),
+    on(fromHomeAction.loadCurrentWeatherSuccess, (state, {entity}) => ({
+        ...state,
+        entity,
+        loading: false,
+    })),
+    on(fromHomeAction.loadCurrentWeatherFail, state => ({
+        ...state,
+        loading: false,
+        error: true,
+    }))
 );
 
 export function homeReducer (state: HomeState | undefined, action: Action): HomeState {
