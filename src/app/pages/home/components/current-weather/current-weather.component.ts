@@ -1,5 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, Output } from '@angular/core';
-import { EventEmitter } from 'protractor';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { CityWeather } from 'src/app/shared/models/weather.model';
 
 @Component({
@@ -11,14 +10,14 @@ import { CityWeather } from 'src/app/shared/models/weather.model';
 export class CurrentWeatherComponent{
 
   @Input()cityWeather: CityWeather;
-  @Output() toogleBookmark = new EventEmitter();
+  @Output()toggleBookmark = new EventEmitter();
 
   get cityName(): string {
     return `${this.cityWeather.city.name} ${this.cityWeather.city.country}`
   }
 
-  onToogleBookmark(){
-    this.toogleBookmark.emit;
+  onToggleBookmark(){
+    this.toggleBookmark.emit();
   }
 
 }

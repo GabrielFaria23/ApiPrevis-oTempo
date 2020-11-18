@@ -4,7 +4,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { BookMark } from 'src/app/shared/models/Bookmark.model';
+import { BookMark } from 'src/app/shared/models/bookmark.model';
 import { CityWeather } from 'src/app/shared/models/weather.model';
 
 import * as fromHomeAction from '../../state/home.actions';
@@ -49,12 +49,13 @@ export class HomePage implements OnInit, OnDestroy{
     this.store.dispatch(fromHomeAction.loadCurrentWeather({ query }))
   }
 
-  onToogleBookmark(){
-    const bookmark = new BookMark;
+  onToggleBookmark(){
+    const bookmark = new BookMark();
     bookmark.id = this.cityWeather.city.id;
     bookmark.name = this.cityWeather.city.name;
     bookmark.country = this.cityWeather.city.country;
     bookmark.coord = this.cityWeather.city.coord;
+    this.store.dispatch(fromHomeAction.toggleBookmark({entity: bookmark}))
   }
 
 }
