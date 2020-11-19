@@ -1,14 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BookmarksPage } from './bookmarks.page';
-import { bookmarkReducer } from './state/bookmarks.reducer';
 import { StoreModule } from '@ngrx/store';
+import { bookmarkReducer } from '../../state/bookmarks.reducer';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [BookmarksPage],
   imports: [
     CommonModule,
-    StoreModule.forFeature('bookmarks', bookmarkReducer)
+    RouterModule,
+    StoreModule.forFeature('bookmarks', bookmarkReducer),
   ]
 })
 export class BookmarksModule { }
