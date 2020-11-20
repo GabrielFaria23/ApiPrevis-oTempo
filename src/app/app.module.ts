@@ -13,6 +13,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { BookmarksModule } from './pages/bookmarks/containers/bookmarks/bookmarks.module';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { reducers } from './shared/state/app.reducer';
+import { CustomRouterSerializer } from './shared/state/router/router.reducer';
 
 @NgModule({
   declarations: [
@@ -21,15 +22,16 @@ import { reducers } from './shared/state/app.reducer';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HomeModule,
     HttpClientModule,
+    HomeModule,
     BookmarksModule,
     StoreModule.forRoot(reducers),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
     EffectsModule.forRoot([]),
-    StoreRouterConnectingModule.forRoot()
+    StoreRouterConnectingModule.forRoot({ serializer: CustomRouterSerializer }),
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
