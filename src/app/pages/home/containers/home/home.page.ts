@@ -18,12 +18,14 @@ import * as fromBookmarksSelectors from '../../../bookmarks/state/bookmarks.sele
 })
 export class HomePage implements OnInit, OnDestroy{
 
-  cityWeather$: Observable<CityWeather>
-  cityWeather: CityWeather
-  loading$: Observable<boolean>
-  error$: Observable<boolean>
-  searchControl: FormControl
+  cityWeather$: Observable<CityWeather>;
+  cityWeather: CityWeather;
+  loading$: Observable<boolean>;
+  error$: Observable<boolean>;
   text: string;
+
+  searchControl: FormControl;
+  searchControlWithAutoComplete: FormControl;
 
   bookmarksList$: Observable<BookMark[]>;
   isCurrentFavorite$: Observable<boolean>;
@@ -34,6 +36,9 @@ export class HomePage implements OnInit, OnDestroy{
 
   ngOnInit() {
     this.searchControl = new FormControl('', Validators.required);
+    this.searchControlWithAutoComplete = new FormControl(undefined);
+    this.searchControlWithAutoComplete.valueChanges
+      .subscribe(value => console.log(value));
 
     this.cityWeather$ = this.store.pipe(select(fromHomeSelectors.selectCurrentWeather));
     this.cityWeather$

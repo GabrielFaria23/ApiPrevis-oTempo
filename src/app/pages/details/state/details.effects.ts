@@ -1,13 +1,14 @@
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 import { Params } from '@angular/router';
-import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { select, Store } from '@ngrx/store';
-import { catchError, map, mergeMap, withLatestFrom } from 'rxjs/operators';
-import { WeatherService } from 'src/app/shared/services/weather.service';
-import { AppState } from 'src/app/shared/state/app.reducer';
-import { combineLatest } from 'rxjs';
 
-import * as fromDetailsActions from './details.actions'
+import { Store, select } from '@ngrx/store';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { combineLatest } from 'rxjs';
+import { mergeMap, map, catchError, withLatestFrom } from 'rxjs/operators';
+
+import { AppState } from 'src/app/shared/state/app.reducer';
+import { WeatherService } from 'src/app/shared/services/weather.service';
+import * as fromDetailsActions from './details.actions';
 import * as fromRouterSelectors from '../../../shared/state/router/router.selectors';
 
 @Injectable()

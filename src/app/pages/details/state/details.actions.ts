@@ -1,5 +1,6 @@
 import { createAction, props } from '@ngrx/store';
-import { CityDailyWeather } from 'src/app/shared/models/weather.model';
+
+import { CityDailyWeather } from '../../../shared/models/weather.model';
 
 export const loadWeatherDetails = createAction('[Details] Load Weather Details');
 
