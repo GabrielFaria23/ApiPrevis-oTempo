@@ -12,9 +12,10 @@ import { homeReducer } from './state/home.reducer';
 import { HomeEffects } from './state/home.effects';
 import { CurrentWeatherComponent } from './components/current-weather/current-weather.component';
 import { RouterModule } from '@angular/router';
+import { UnitSelectorComponent } from './containers/unit-selector/unit-selector.component';
 
 @NgModule({
-  declarations: [HomePage, CurrentWeatherComponent,],
+  declarations: [HomePage, CurrentWeatherComponent, UnitSelectorComponent,],
   imports: [
     CommonModule,
     ReactiveFormsModule,
