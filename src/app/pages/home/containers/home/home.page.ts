@@ -4,12 +4,14 @@ import { FormControl, Validators } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
 import { combineLatest, Observable, Subject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
-import { BookMark } from 'src/app/shared/models/bookmark.model';
+import { Bookmark } from 'src/app/shared/models/bookmark.model';
 import { CityWeather } from 'src/app/shared/models/weather.model';
 
 import * as fromHomeAction from '../../state/home.actions';
 import * as fromHomeSelectors from '../../state/home.selectors';
 import * as fromBookmarksSelectors from '../../../bookmarks/state/bookmarks.selectors';
+import { ValueConverter } from '@angular/compiler/src/render3/view/template';
+import { CityTypeaheadItem } from 'src/app/shared/models/city-typeahead-item.model';
 
 @Component({
   selector: 'jv-home',
@@ -27,7 +29,7 @@ export class HomePage implements OnInit, OnDestroy{
   searchControl: FormControl;
   searchControlWithAutoComplete: FormControl;
 
-  bookmarksList$: Observable<BookMark[]>;
+  bookmarksList$: Observable<Bookmark[]>;
   isCurrentFavorite$: Observable<boolean>;
 
   private componentDestoyed$ = new Subject();
@@ -37,8 +39,14 @@ export class HomePage implements OnInit, OnDestroy{
   ngOnInit() {
     this.searchControl = new FormControl('', Validators.required);
     this.searchControlWithAutoComplete = new FormControl(undefined);
+
     this.searchControlWithAutoComplete.valueChanges
-      .subscribe(value => console.log(value));
+      .pipe(takeUntil(this.componentDestoyed$))
+      .subscribe((value: CityTypeaheadItem) => {
+        if(value) {
+          this.store.dispatch(fromHomeAction.loadCurrentWeatherById({id: value.geonameid.toString()}));
+        }
+      });
 
     this.cityWeather$ = this.store.pipe(select(fromHomeSelectors.selectCurrentWeather));
     this.cityWeather$
@@ -73,7 +81,7 @@ export class HomePage implements OnInit, OnDestroy{
   }
 
   onToggleBookmark(){
-    const bookmark = new BookMark();
+    const bookmark = new Bookmark();
     bookmark.id = this.cityWeather.city.id;
     bookmark.name = this.cityWeather.city.name;
     bookmark.country = this.cityWeather.city.country;

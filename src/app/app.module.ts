@@ -10,7 +10,7 @@ import { AppComponent } from './app.component';
 import { HomeModule } from './pages/home/home.module';
 import { environment } from '../environments/environment';
 import { EffectsModule } from '@ngrx/effects';
-import { BookmarksModule } from './pages/bookmarks/containers/bookmarks/bookmarks.module';
+import { BookmarksModule } from './pages/bookmarks/bookmarks.module';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { reducers } from './shared/state/app.reducer';
 import { CustomRouterSerializer } from './shared/state/router/router.reducer';

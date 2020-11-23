@@ -4,6 +4,11 @@
        [typeaheadAsync]="true"
        [typeaheadWaitMs]="400"
        [disabled]="disabled" 
+       [typeaheadItemTemplate]="itemTemplate"
        (typeaheadOnSelect)="onSelected($event)"
        class="form-control"
        placeholder="Pesquisar">
+
+<ng-template let-item="item" #itemTemplate>
+       <span>{{ item.name}}, {{ item.country }}</span>
+</ng-template>

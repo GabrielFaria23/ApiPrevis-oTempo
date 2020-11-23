@@ -1,5 +1,6 @@
 import { Component, OnInit, Optional, Self } from '@angular/core';
 import { ControlValueAccessor, NgControl } from '@angular/forms';
+
 import { TypeaheadMatch } from 'ngx-bootstrap/typeahead';
 import { Observable, Subscriber } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
@@ -17,6 +18,7 @@ export class CitiesTypeaheadComponent implements OnInit, ControlValueAccessor {
   dataSource$: Observable<CityTypeaheadItem[]>;
   search: string;
 
+  loading: boolean;
   disabled: boolean;
   private onChange: (value: CityTypeaheadItem) => void;
   private onTouched: () => void;
