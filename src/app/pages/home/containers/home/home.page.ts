@@ -7,13 +7,15 @@ import { combineLatest, Observable, Subject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
 import { Bookmark } from 'src/app/shared/models/bookmark.model';
 import { CityWeather } from 'src/app/shared/models/weather.model';
+import { CityTypeaheadItem } from 'src/app/shared/models/city-typeahead-item.model';
+import { UnitSelectorComponent } from '../unit-selector/unit-selector.component';
+import { Units } from 'src/app/shared/models/units.enum';
+
 
 import * as fromHomeAction from '../../state/home.actions';
 import * as fromHomeSelectors from '../../state/home.selectors';
 import * as fromBookmarksSelectors from '../../../bookmarks/state/bookmarks.selectors';
-import { CityTypeaheadItem } from 'src/app/shared/models/city-typeahead-item.model';
-import { UnitSelectorComponent } from '../unit-selector/unit-selector.component';
-
+import * as fromConfigSelectors from '../../../../shared/state/config/config.selectors';
 @Component({
   selector: 'jv-home',
   templateUrl: './home.page.html',
@@ -33,6 +35,8 @@ export class HomePage implements OnInit, OnDestroy{
   bookmarksList$: Observable<Bookmark[]>;
   isCurrentFavorite$: Observable<boolean>;
 
+  unit$: Observable<Units>;
+  
   private componentDestoyed$ = new Subject();
 
   private portalOutlet: PortalOutlet;
@@ -74,7 +78,10 @@ export class HomePage implements OnInit, OnDestroy{
         }),
       );
 
+      this.unit$ = this.store.pipe(select(fromConfigSelectors.selectUnitConfig));
+
       this.setupPortal();
+
   }
 
   ngOnDestroy() {

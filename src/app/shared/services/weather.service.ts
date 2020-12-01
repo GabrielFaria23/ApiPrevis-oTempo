@@ -22,14 +22,14 @@ export class WeatherService implements OnDestroy{
 
   private serviceDestroyed$ = new Subject();
 
-  constructor(private http:HttpClient,
-              private store: Store<AppState>) { 
+  constructor(private http: HttpClient,
+              private store: Store<AppState>) {
     store
-        .pipe(
-          select(fromConfigSelectors.selectUnitConfig),
-          takeUntil(this.serviceDestroyed$),
-        )
-        .subscribe((unit: Units) => this.unit = unit);
+      .pipe(
+        select(fromConfigSelectors.selectUnitConfig),
+        takeUntil(this.serviceDestroyed$),
+      )
+      .subscribe((unit: Units) => this.unit = unit);
   }
 
   ngOnDestroy() {
@@ -38,9 +38,9 @@ export class WeatherService implements OnDestroy{
   }
 
   getWeatherByQuery(query: string): Observable<CityWeather>{
-    const params= new HttpParams({ fromObject: { q: query }})
-    return this.doGet('weather', params)
-      .pipe(map(response => responseToCityWeather(response)))
+    const params= new HttpParams({ fromObject: { q: query }});
+    return this.doGet<any>('weather', params)
+      .pipe(map(response => responseToCityWeather(response)));
   } 
 
   getCityWeatherById(id: string): Observable<CityWeather> {
@@ -73,7 +73,7 @@ export class WeatherService implements OnDestroy{
     params = params.append('appid', environment.apiKey);
     params = params.append('lang', 'pt_br'); //faz a response vir em portugues
     if(this.unit !== Units.SI) {
-      params = params.append('utils', this.unit.toLocaleLowerCase());
+      params = params.append('units', this.unit.toLocaleLowerCase());
     }
     return this.http.get<T>(`https://api.openweathermap.org/data/2.5/${ url }`, { params });
   }

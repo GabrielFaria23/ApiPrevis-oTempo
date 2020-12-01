@@ -13,6 +13,7 @@ import * as fromConfigActions from '../../../../shared/state/config/config.actio
   templateUrl: './unit-selector.component.html',
   styleUrls: ['./unit-selector.component.scss']
 })
+
 export class UnitSelectorComponent implements OnInit {
 
   unit$: Observable<Units>;
